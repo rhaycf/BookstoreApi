@@ -1,4 +1,4 @@
-using Livraria.Services;
+using Bookstore.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

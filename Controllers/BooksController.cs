@@ -1,9 +1,9 @@
-﻿using Livraria.Communication;
-using Livraria.Models;
-using Livraria.Services;
+﻿using Bookstore.Communication;
+using Bookstore.Models;
+using Bookstore.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Livraria.Controllers;
+namespace Bookstore.Controllers;
 
 /// <summary>
 /// Controller responsável pelo gerenciamento de livros.
@@ -53,10 +53,7 @@ public class BooksController : ControllerBase
     [ProducesResponseType(typeof(Book), StatusCodes.Status201Created)]
     public IActionResult CreateBook([FromBody] CreateBookRequest request)
     {
-        var createdBook = bookService.ValidateTitleAndAuthor(request);
-       
-        bookService.ValidatePrice(request.Price);
-        bookService.ValidateStock(request.Stock);
+        var createdBook = bookService.CreateBook(request);
 
         return CreatedAtAction(nameof(GetBookById), new { id = createdBook.Id }, createdBook);
     }
@@ -69,10 +66,7 @@ public class BooksController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult UpdateBook(Guid id, [FromBody] UpdateBookRequest request)
     {
-        bookService.UpdateBook(id, request);
-
-        bookService.ValidatePrice(request.Price);
-        bookService.ValidateStock(request.Stock);        
+        bookService.UpdateBook(id, request);   
 
         return NoContent();
     }

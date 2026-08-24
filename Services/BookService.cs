@@ -1,7 +1,7 @@
-﻿using Livraria.Communication;
-using Livraria.Models;
+﻿using Bookstore.Communication;
+using Bookstore.Models;
 
-namespace Livraria.Services;
+namespace Bookstore.Services;
 
 public class BookService
 {
@@ -21,6 +21,23 @@ public class BookService
 
         if (book == null) throw new ArgumentException("O livro não existe!");
 
+        bool titleAndAuthorDuplicate = books.Any(
+            b => b.Title.Equals(request.Title, StringComparison.OrdinalIgnoreCase) &&
+            b.Author.Equals(request.Author, StringComparison.OrdinalIgnoreCase)
+        );
+
+        if (titleAndAuthorDuplicate)
+            throw new ArgumentException("Este livro (título e o autor) já está cadastrado!");
+
+        if (request.Title.Length < 2 || request.Title.Length > 120)
+            throw new ArgumentException("Este título não pode possuir menos que 2 caracteres ou ser maior que 120 caracteres!");
+
+        if (request.Author.Length < 2 || request.Author.Length > 120)
+            throw new ArgumentException("Este autor não pode possuir menos que 2 caracteres ou ser maior que 120 caracteres!");
+
+        ValidatePrice(request.Price);
+        ValidateStock(request.Stock);
+
         book.Title = request.Title;
         book.Author = request.Author;
         book.Genre = request.Genre;
@@ -39,13 +56,11 @@ public class BookService
         return delete;
     }
 
-    public Book ValidateTitleAndAuthor(CreateBookRequest request)
+    public Book CreateBook(CreateBookRequest request)
     {
-        Guid bookId = Guid.NewGuid();
-
         var newBook = new Book
         {
-            Id = bookId,
+            Id = Guid.NewGuid(),
             Title = request.Title,
             Author = request.Author,
             Genre = request.Genre,
@@ -66,6 +81,9 @@ public class BookService
         
         if (newBook.Author.Length < 2 || newBook.Author.Length > 120)
             throw new ArgumentException("Este autor não pode possuir menos que 2 caracteres ou ser maior que 120 caracteres!");
+
+        ValidatePrice(newBook.Price);
+        ValidateStock(newBook.Stock);
 
         books.Add(newBook);
 

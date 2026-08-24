@@ -1,6 +1,6 @@
-﻿using Livraria.Utils.Enums;
+﻿using Bookstore.Utils.Enums;
 
-namespace Livraria.Communication;
+namespace Bookstore.Communication;
 
 public class UpdateBookRequest
 {

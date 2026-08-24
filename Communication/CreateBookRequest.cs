@@ -1,7 +1,7 @@
-﻿using Livraria.Models;
-using Livraria.Utils.Enums;
+﻿using Bookstore.Models;
+using Bookstore.Utils.Enums;
 
-namespace Livraria.Services;
+namespace Bookstore.Communication;
 
 public class CreateBookRequest
 {

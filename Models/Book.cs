@@ -1,6 +1,6 @@
-﻿using Livraria.Utils.Enums;
+﻿using Bookstore.Utils.Enums;
 
-namespace Livraria.Models;
+namespace Bookstore.Models;
 
 public class Book
 {

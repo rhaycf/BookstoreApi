@@ -1,4 +1,4 @@
-﻿namespace Livraria.Utils.Enums;
+﻿namespace Bookstore.Utils.Enums;
 
 public enum GenreEnum
 {
